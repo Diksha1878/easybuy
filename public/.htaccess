@@ -1,0 +1,41 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# 3 Month
+<FilesMatch "\.(swf|ico|flv)$">
+  Header set Cache-Control "max-age=7257600"
+</FilesMatch>
+
+# 1 Week
+<FilesMatch "\.(js|css|pdf|txt)$">
+  Header set Cache-Control "max-age=604800"
+</FilesMatch>
+
+# 1 Days
+<FilesMatch "\.(gif|jpg|jpeg|png|webp)$">
+  Header set Cache-Control "max-age=86400"
+</FilesMatch>
+
+# 10 Minutes
+<FilesMatch "\.(html|htm)$">
+  Header set Cache-Control "max-age=600"
+</FilesMatch>
